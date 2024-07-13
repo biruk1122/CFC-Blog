@@ -1,6 +1,7 @@
 import express from "express"
 import mongoose from "mongoose"
 import dotenv from "dotenv"
+import userRoutes from "./routes/user_route.js"
 
 dotenv.config()
 
@@ -18,3 +19,5 @@ const app = express()
 app.listen(3000, () => {
   console.log("Server operational at port 3000!!!") // Log a message when the server starts
 })
+
+app.use("/api/user", userRoutes)
