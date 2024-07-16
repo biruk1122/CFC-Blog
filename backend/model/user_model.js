@@ -19,6 +19,11 @@ const userSchema = new mongoose.Schema(
       type: String, // The password field is a string
       required: true, // The password field is required
     },
+    avatar: {
+      type: String,
+      default:
+        "https://imgv3.fotor.com/images/blog-cover-image/10-profile-picture-ideas-to-make-you-stand-out.jpg",
+    },
   },
   { timestamps: true } // Enable timestamps for createdAt and updatedAt fields
 )
