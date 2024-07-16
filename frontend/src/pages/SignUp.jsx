@@ -1,6 +1,60 @@
-import React from "react"
+import React, { useState } from "react"
+// Import the Link component from React Router for navigation
+import { Link, useNavigate } from "react-router-dom"
+// Import components from flowbite-react library
+import { Label, TextInput, Button, Alert, Spinner } from "flowbite-react"
 
 export default function SignUp() {
+  const [formDetails, setFormDetails] = useState({})
+  // Define state for error messages
+  const [errorMessage, setErrorMessage] = useState(null)
+  // Define state for loading status
+  const [loading, setLoading] = useState(false)
+  // Hook for programmatic navigation
+  const navigate = useNavigate()
+  // Handler function to update form state when input fields change
+  const fieldChangeHandler = (e) => {
+    // Update the formDetails state with the new input value, trimming any whitespace
+    setFormDetails({ ...formDetails, [e.target.id]: e.target.value.trim() })
+  }
+  // Handler function to handle form submission
+  const submitAction = async (e) => {
+    // Prevent the default form submission behavior
+    e.preventDefault()
+    // Check if any required field is empty
+    if (!formDetails.username || !formDetails.email || !formDetails.password) {
+      return setErrorMessage("Please fill all fields.")
+    }
+    try {
+      // Set loading state to true
+      setLoading(true)
+      // Clear any previous error message
+      setErrorMessage(null)
+      // Make a POST request to the signup endpoint
+      const res = await fetch("/api/authentication/signup", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formDetails),
+      })
+      // Parse the response JSON
+      const data = await res.json()
+      // Check if the response indicates failure
+      if (data.success === false) {
+        return setErrorMessage(data.message)
+      }
+      // Set loading state to false
+      setLoading(false)
+      // If the response is OK, navigate to the sign-in page
+      if (res.ok) {
+        navigate("/sign-in")
+      }
+    } catch (error) {
+      // Set the error message if an exception occurs
+      setErrorMessage(error.message)
+      // Set loading state to false
+      setLoading(false)
+    }
+  }
   return (
     // Render a div with classes for minimum screen height and top margin
     <div className="min-h-screen mt-20">
