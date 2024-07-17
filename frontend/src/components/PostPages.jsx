@@ -141,3 +141,11 @@ export default function PostPages() {
               </Table.Body>
             ))}
           </Table>
+          {viewMore && (
+            <button
+              onClick={handleLoadMore}
+              className="w-full text-amber-500 self-center text-sm py-8"
+            >
+              View More
+            </button>
+          )}
