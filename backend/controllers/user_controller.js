@@ -57,5 +57,19 @@ export const test = (req, res) => {
           },
         },
         { new: true }
+
+        export const removeUser = async (req, res, next) => {
+          if (!req.user.administrator && req.user.id !== req.params.userId) {
+            return next(
+              errorHandler(403, "You do not have permission to delete this user.")
+            )
+          }
+          try {
+            await User.findByIdAndDelete(req.params.userId)
+            res.status(200).json("The user has been successfully deleted.")
+          } catch (error) {
+            next(error)
+          }
+        }
       )
 }
