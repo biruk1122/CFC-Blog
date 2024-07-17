@@ -24,3 +24,54 @@ export const generate = async (req, res, next) => {
     next(error)
   }
 }
+
+export const loadPost = async (req, res, next) => {
+  // console.log("Request received with query parameters:", req.query) // Log request query params
+  try {
+    const initialPosition = parseInt(req.query.initialPosition) || 0
+    const maxItems = parseInt(req.query.maxItems) || 12
+    const sortingOrder = req.query.order === "asc" ? 1 : -1
+    const blogs = await blog
+      .find({
+        ...(req.query.userId && { userId: req.query.userId }),
+        ...(req.query.products && { products: req.query.products }),
+        ...(req.query.permalink && { permalink: req.query.permalink }),
+        ...(req.query.postId && { _id: req.query.postId }),
+        ...(req.query.searchText && {
+          $or: [
+            { subject: { $regex: req.query.searchText, $options: "i" } },
+            { content: { $regex: req.query.searchText, $options: "i" } },
+          ],
+        }),
+      })
+      .sort({ updatedAt: sortingOrder })
+      .skip(initialPosition)
+      .limit(maxItems)
+
+    //console.log("Blogs found:", blogs) // Debugging found blogs
+
+    const totalCount = await blog.countDocuments()
+    //console.log("Total count of blogs:", totalCount) // Debugging total count
+
+    const currentTime = new Date()
+
+    const lastMonth = new Date(
+      currentTime.getFullYear(),
+      currentTime.getMonth() - 1,
+      currentTime.getDate()
+    )
+
+    const previousMonthPosts = await blog.countDocuments({
+      createdAt: { $gte: lastMonth },
+    })
+
+    res.status(200).json({
+      blogs,
+      totalCount,
+      previousMonthPosts,
+    })
+  } catch (error) {
+    //console.error("Error loading posts:", error) // Debugging error
+    next(error)
+  }
+}
