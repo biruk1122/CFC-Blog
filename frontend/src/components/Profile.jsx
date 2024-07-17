@@ -1,5 +1,12 @@
 import { Alert, Button, Modal, TextInput } from "flowbite-react"
 import React, { useEffect, useRef, useState } from "react"
+import {
+    getDownloadURL,
+    getStorage,
+    ref,
+    uploadBytesResumable,
+  } from "firebase/storage"
+  import { app } from "../firebase"
 
 export default function Profile() {
     return (
@@ -84,6 +91,27 @@ export default function Profile() {
                   }
                 } catch (error) {
                   dispatch(updateFailure(error.message))
+                }
+              }
+
+              const manageRemoveUser = async () => {
+                setDisplayModal(false)
+                try {
+                  dispatch(initiateUserDeletion())
+                  console.log("Deleting user with ID:", currentUser._id) // Add this log
+                  const res = await fetch(`/api/user/delete/${currentUser._id}`, {
+                    method: "DELETE",
+                  })
+                  const data = await res.json()
+                  if (!res.ok) {
+                    dispatch(userDeletionFailure(data.message))
+                  } else {
+                    dispatch(userDeletionSuccess(data))
+                    console.log("User deletion success:", data) // Add this log
+                  }
+                } catch (error) {
+                  dispatch(userDeletionFailure(error.message))
+                  console.error("Error deleting user:", error) // Add this log
                 }
               }
             
