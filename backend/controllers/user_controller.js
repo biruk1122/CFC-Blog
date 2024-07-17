@@ -70,6 +70,17 @@ export const test = (req, res) => {
           } catch (error) {
             next(error)
           }
+          export const signOut = (req, res, next) => {
+            try {
+              res
+                .clearCookie("access_token")
+                .status(200)
+                .json("The user's session has been terminated.")
+            } catch (error) {
+              next(error)
+            }
+          }
+          
         }
       )
 }
