@@ -37,6 +37,15 @@ export default function ProfileSideBar() {
           >
             Profile
           </Sidebar.Item>
+          {currentUser.administrator && (
+            <Sidebar.Item
+              as={Link}
+              to="/dashboard?tab=posts"
+              active={tab === "posts"}
+              icon={HiDocumentText}
+            >
+              Posts
+            </Sidebar.Item>
           <Sidebar.Item
             icon={HiArrowSmRight}
             className="cursor-pointer"
@@ -44,6 +53,7 @@ export default function ProfileSideBar() {
           >
             Sign Out
           </Sidebar.Item>
+
         </Sidebar.ItemGroup>
       </Sidebar.Items>
     </Sidebar>
