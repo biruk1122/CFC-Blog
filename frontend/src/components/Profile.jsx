@@ -51,6 +51,42 @@ export default function Profile() {
                   setFileUpload(false)
                 })
               }
+              const handleChange = (e) => {
+                setFormData({ ...formData, [e.target.id]: e.target.value })
+              }
+            
+              const handleSubmit = async (e) => {
+                e.preventDefault()
+                setUserUpdateSuccess(null)
+                setUserUpdateError(null)
+            
+                if (Object.keys(formData).length === 0) {
+                  setUserUpdateError("No modifications were made")
+                  return
+                }
+            
+                try {
+                  dispatch(updateStart())
+                  const res = await fetch(`/api/user/update/${currentUser._id}`, {
+                    method: "PUT",
+                    headers: {
+                      "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify(formData),
+                  })
+            
+                  const data = await res.json()
+                  if (!res.ok) {
+                    dispatch(updateFailure(data.message))
+                  } else {
+                    dispatch(updateSuccess(data))
+                    setUserUpdateSuccess("Update Successfull!")
+                  }
+                } catch (error) {
+                  dispatch(updateFailure(error.message))
+                }
+              }
+            
             )
           }
 
