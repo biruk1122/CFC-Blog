@@ -149,3 +149,34 @@ export default function PostPages() {
               View More
             </button>
           )}
+        </>
+      ) : (
+        <p>There are currently no posts to display.</p>
+      )}
+      <Modal
+        show={displayModal}
+        onClose={() => setDisplayModal(false)}
+        popup
+        size="md"
+      >
+        <Modal.Header />
+        <Modal.Body>
+          <div className="text-center">
+            <HiOutlineExclamationCircle className="h-12 w-12 text-red-600 dark:text-gray-300 mb-6 mx-auto" />
+            <h2 className="mb-6 text-lg text-red-500 ">
+              Are you certain you wish to permanently delete this post?
+            </h2>
+            <div className="flex justify-center gap-6">
+              <Button color="failure" onClick={manageDeletePost}>
+                Yes
+              </Button>
+              <Button color="gray" onClick={() => setDisplayModal(false)}>
+                No
+              </Button>
+            </div>
+          </div>
+        </Modal.Body>
+      </Modal>
+    </div>
+  )
+}

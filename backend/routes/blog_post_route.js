@@ -6,5 +6,6 @@ const pathFinder = express.Router()
 
 pathFinder.post("/generate", validateToken, generate)
 pathFinder.get("/loadPost", loadPost)
+pathFinder.delete("/removepost/:postId/:userId", validateToken, removePost)
 
 export default pathFinder

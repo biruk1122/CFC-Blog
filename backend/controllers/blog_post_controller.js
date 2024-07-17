@@ -75,3 +75,20 @@ export const loadPost = async (req, res, next) => {
     next(error)
   }
 }
+
+export const removePost = async (req, res, next) => {
+  if (!req.user.administrator || req.user.userId !== req.params.userId) {
+    return next(
+      errorHandler(
+        403,
+        "Your access does not include post deletion privileges."
+      )
+    )
+  }
+  try {
+    await blog.findByIdAndDelete(req.params.postId)
+    res.status(200).json("The post has been deleted successfully.")
+  } catch (error) {
+    next(error)
+  }
+}
