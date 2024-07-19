@@ -84,3 +84,51 @@ export const test = (req, res) => {
         }
       )
 }
+
+export const loadUsers = async (req, res, next) => {
+  if (!req.user.administrator) {
+    return next(
+      errorHandler(
+        403,
+        "Your access level does not allow you to see the complete members list."
+      )
+    )
+  }
+  try {
+    const indexStart = parseInt(req.query.indexStart) || 0
+    const maxItems = parseInt(req.query.maxItems) || 8
+    const sortOrder = req.query.sort === "asc" ? 1 : -1
+
+    const members = await User.find()
+      .sort({ createdAt: sortOrder })
+      .skip(indexStart)
+      .limit(maxItems)
+
+    const membersNoPassword = members.map((user) => {
+      const { password, ...rest } = user._doc
+      return rest
+    })
+
+    const totalMembers = await User.countDocuments()
+
+    const present = new Date()
+
+    const lastMonth = new Date(
+      present.getFullYear(),
+      present.getMonth() - 1,
+      present.getDate()
+    )
+
+    const lastMonthMembers = await User.countDocuments({
+      createdAt: { $gte: lastMonth },
+    })
+
+    res.status(200).json({
+      members: membersNoPassword,
+      totalMembers,
+      lastMonthMembers,
+    })
+  } catch (error) {
+    next(error)
+  }
+}
