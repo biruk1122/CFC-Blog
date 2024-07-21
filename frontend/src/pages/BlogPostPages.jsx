@@ -1,10 +1,44 @@
 import React, { useEffect, useState } from "react"
 import { Link, useParams } from "react-router-dom"
 import { Button, Spinner } from "flowbite-react"
+import CallToAction from "../components/CallToAction"
+import Comment from "../components/Comment"
+import PostCard from "../components/PostCard"
 
 export default function BlogPostPages() {
   const { blogPermalink } = useParams()
   const [loading, setLoading] = useState(true)
+  const [error, setError] = useState(false)
+  const [blog, setBlog] = useState(null)
+  const [recentPosts, setRecentPosts] = useState(null)
+
+  useEffect(() => {
+    const fetchBlog = async () => {
+      //console.log("Fetching blog with permalink:", permalink) // Debugging permalink
+      try {
+        setLoading(true)
+        const res = await fetch(`/api/post/loadPost?permalink=${blogPermalink}`)
+        //console.log("Fetch response:", res) // Debugging response
+        const data = await res.json()
+        //console.log("Response from API:", data) // Debugging response
+        if (!res.ok) {
+          setError(true)
+          setLoading(false)
+          return
+        }
+        if (res.ok) {
+          setBlog(data.blogs[0])
+          setLoading(false)
+          setError(false)
+        }
+      } catch (error) {
+        //console.error("Error fetching blog:", error) // Debugging error
+        setError(true)
+        setLoading(false)
+      }
+    }
+    fetchBlog()
+  }, [blogPermalink])
 
   useEffect(() => {
     try {
