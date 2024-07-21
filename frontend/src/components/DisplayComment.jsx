@@ -56,7 +56,7 @@ export default function DisplayComment({ comment, onLike, onEdit, onDelete }) {
       console.log(error.message)
     }
   }
-  ame = "text-gray-500 hover:text-red-500"
+
   return (
     <div className="flex p-4 border-b dark:border-gray-600 text-sm">
       <div className="flex-shrink-0 mr-3">
