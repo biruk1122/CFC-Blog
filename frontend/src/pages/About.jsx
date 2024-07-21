@@ -8,6 +8,14 @@ export default function About() {
           <h1 className="text-3xl font-semibold text-center my-7 ">
             About Chilalo Food Complex
           </h1>
+
+          <div className="flex justify-center items-center">
+            <img
+              src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTBh-cKrI6ETUryEg-YOzZMFGFL1kNYQvjqNg&s"
+              alt="CFC_Logo"
+            />
+          </div>
+
           <div className="pb-10 text-md text-gray-700 dark:text-gray-300 flex flex-col gap-5">
             <p>
               Chilalo Food Complex, located in Asella within the Oromia Region,
