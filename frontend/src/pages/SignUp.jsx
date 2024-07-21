@@ -1,10 +1,14 @@
+// Import the React library
 import React, { useState } from "react"
 // Import the Link component from React Router for navigation
 import { Link, useNavigate } from "react-router-dom"
 // Import components from flowbite-react library
 import { Label, TextInput, Button, Alert, Spinner } from "flowbite-react"
+import OAuth from "../components/OAuth"
 
+// Define a functional component named SignUp
 export default function SignUp() {
+  // Define state for form details
   const [formDetails, setFormDetails] = useState({})
   // Define state for error messages
   const [errorMessage, setErrorMessage] = useState(null)
@@ -55,6 +59,7 @@ export default function SignUp() {
       setLoading(false)
     }
   }
+  // Return JSX representing the component's UI
   return (
     // Render a div with classes for minimum screen height and top margin
     <div className="min-h-screen mt-20">
