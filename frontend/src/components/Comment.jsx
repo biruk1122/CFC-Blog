@@ -53,6 +53,23 @@ export default function Comment({ postId }) {
     }
   }
 
+  
+  useEffect(() => {
+    const getComments = async () => {
+      try {
+        const res = await fetch(`/api/comment/getPostComment/${postId}`)
+        if (res.ok) {
+          const data = await res.json()
+          setComments(data)
+        }
+      } catch (error) {
+        console.log(error.message)
+      }
+    }
+    getComments()
+  }, [postId])
+
+
   return (
     <div className="max-w-2xl mx-auto w-full p-4">
       {currentUser ? (
