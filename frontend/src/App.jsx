@@ -2,7 +2,7 @@ import React from "react"
 import "flowbite/dist/flowbite.css"
 import { BrowserRouter, Routes, Route } from "react-router-dom"
 
-// importing pages from the pages & components folder
+// importing pages from the pages folder
 import SignIn from "./pages/SignIn"
 import SignUp from "./pages/SignUp"
 import Home from "./pages/Home"
@@ -17,11 +17,13 @@ import AddPost from "./pages/AddPost"
 import UpdateBlogs from "./pages/UpdateBlogs"
 import BlogPostPages from "./pages/BlogPostPages"
 import Search from "./pages/Search"
+import ScrollToTop from "./components/ScrollToTop"
 
 export default function App() {
   return (
     //Routing the pages using react-router-pakage to create a single page application (SPAs)
     <BrowserRouter>
+      <ScrollToTop />
       <Header />
       <Routes>
         <Route path="/home" element={<Home />} />
