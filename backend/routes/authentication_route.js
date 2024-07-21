@@ -1,3 +1,4 @@
+// Import the Express framework
 import express from "express"
 // Import the signup function from the authentication controller
 import {
