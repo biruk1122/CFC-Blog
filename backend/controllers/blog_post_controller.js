@@ -1,4 +1,5 @@
 import blog from "../model/blog_post_model.js"
+import { errorHandler } from "../utils/error.js"
 
 export const generate = async (req, res, next) => {
   if (!req.user.administrator) {
@@ -94,32 +95,31 @@ export const removePost = async (req, res, next) => {
 }
 
 export const editPost = async (req, res, next) => {
-    // console.log("Edit Post Params:", req.params) // Log the parameters
-    if (!req.user.administrator || req.user.userId !== req.params.userId) {
-      return next(errorHandler(403, "You are not authorized to edit this post."))
-    }
-    try {
-      if (!req.params.postId) {
-        return next(errorHandler(400, "Post ID is required.")) // Ensure postId is required
-      }
-      const editedPost = await blog.findByIdAndUpdate(
-        req.params.postId,
-        {
-          $set: {
-            subject: req.body.subject,
-            content: req.body.content,
-            products: req.body.products,
-            image: req.body.image,
-          },
-        },
-        { new: true }
-      )
-      if (!editedPost) {
-        return res.status(404).json({ error: "Post not found" })
-      }
-      res.status(200).json(editedPost)
-    } catch (error) {
-      next(error)
-    }
+  // console.log("Edit Post Params:", req.params) // Log the parameters
+  if (!req.user.administrator || req.user.userId !== req.params.userId) {
+    return next(errorHandler(403, "You are not authorized to edit this post."))
   }
-  
+  try {
+    if (!req.params.postId) {
+      return next(errorHandler(400, "Post ID is required.")) // Ensure postId is required
+    }
+    const editedPost = await blog.findByIdAndUpdate(
+      req.params.postId,
+      {
+        $set: {
+          subject: req.body.subject,
+          content: req.body.content,
+          products: req.body.products,
+          image: req.body.image,
+        },
+      },
+      { new: true }
+    )
+    if (!editedPost) {
+      return res.status(404).json({ error: "Post not found" })
+    }
+    res.status(200).json(editedPost)
+  } catch (error) {
+    next(error)
+  }
+}
