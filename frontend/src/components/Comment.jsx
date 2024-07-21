@@ -33,7 +33,6 @@ export default function Comment({ postId }) {
         }),
       })
 
-      
       //  console.log("Fetch response:", res)
 
       if (!res.ok) {
@@ -53,7 +52,6 @@ export default function Comment({ postId }) {
     }
   }
 
-  
   useEffect(() => {
     const getComments = async () => {
       try {
@@ -97,7 +95,33 @@ export default function Comment({ postId }) {
     }
   }
 
+  const handleEdit = async (comment, editedContent) => {
+    setComments(
+      comments.map((c) =>
+        c._id === comment._id ? { ...c, content: editedContent } : c
+      )
+    )
+  }
 
+  const handleDelete = async (commentId) => {
+    setShowModal(false)
+    // console.log(`Deleting comment with ID: ${commentId}`)
+    try {
+      if (!currentUser) {
+        navigate("/sign-in")
+        return
+      }
+      const res = await fetch(`/api/comment/deleteComment/${commentId}`, {
+        method: "DELETE",
+      })
+      if (res.ok) {
+        const data = await res.json()
+        setComments(comments.filter((comment) => comment._id !== commentId))
+      }
+    } catch (error) {
+      console.log(error.message)
+    }
+  }
   return (
     <div className="max-w-2xl mx-auto w-full p-4">
       {currentUser ? (
@@ -123,3 +147,79 @@ export default function Comment({ postId }) {
           </Link>
         </div>
       )}
+      {currentUser && (
+        <form
+          onSubmit={handleFormSubmit}
+          className="border border-yellow-500 rounded-md p-4"
+        >
+          <Textarea
+            placeholder="Add a comment..."
+            rows="3"
+            maxLength="300"
+            onChange={(e) => setStatement(e.target.value)}
+            value={statement}
+          />
+          <div className="flex justify-between items-center mt-5">
+            <p className="text-gray-600 text-xs">
+              {300 - statement.length} characters remaining
+            </p>
+            <Button className="bg-yellow-500" type="submit">
+              Submit
+            </Button>
+          </div>
+        </form>
+      )}
+      {comments.length === 0 ? (
+        <p className="text-sm my-5">No Comments yet!</p>
+      ) : (
+        <>
+          <div className="text-sm my-5 flex items-center gap-1">
+            <p>Comments</p>
+            <div className="border border-gray-500 py-1 px-2 rounded-sm">
+              <p>{comments.length}</p>
+            </div>
+          </div>
+          {comments.map((comment) => (
+            <DisplayComment
+              key={comment._id}
+              comment={comment}
+              onLike={handleLike}
+              onEdit={handleEdit}
+              onDelete={(commentId) => {
+                setShowModal(true)
+                setCommentToDelete(commentId)
+              }}
+            />
+          ))}
+        </>
+      )}
+      <Modal
+        show={showModal}
+        onClose={() => setShowModal(false)}
+        popup
+        size="md"
+      >
+        <Modal.Header />
+        <Modal.Body>
+          <div className="text-center">
+            <HiOutlineExclamationCircle className="h-12 w-12 text-red-600 dark:text-gray-300 mb-6 mx-auto" />
+            <h2 className="mb-6 text-lg text-red-500 ">
+              Are you certain you wish to permanently delete this comment?
+            </h2>
+            <div className="flex justify-center gap-6">
+              <Button
+                color="failure"
+                onClick={() => handleDelete(commentToDelete)}
+              >
+                Yes
+              </Button>
+              <Button color="gray" onClick={() => setShowModal(false)}>
+                No
+              </Button>
+            </div>
+          </div>
+        </Modal.Body>
+      </Modal>
+    </div>
+  )
+}
