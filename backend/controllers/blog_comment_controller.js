@@ -87,3 +87,39 @@ export const editComment = async (req, res, next) => {
     next(error)
   }
 }
+
+export const deleteComment = async (req, res, next) => {
+  console.log("deleteComment called")
+  try {
+    const commentId = req.params.commentId
+    console.log("Deleting comment with ID:", commentId)
+
+    const comment = await Comment.findById(commentId)
+    console.log("Found comment:", comment)
+
+    if (!comment) {
+      console.log("Comment not found")
+      return next(errorHandler(404, "Comment not found"))
+    }
+
+    const userId = req.user.id
+    const isAdmin = req.user.administrator
+    console.log("Current user ID:", userId)
+    console.log("Is admin:", isAdmin)
+
+    if (comment.userId !== userId && !isAdmin) {
+      console.log("User not authorized to delete this comment")
+      return next(
+        errorHandler(403, "You are not allowed to delete this comment")
+      )
+    }
+
+    await Comment.findByIdAndDelete(commentId)
+    console.log("Comment deleted successfully")
+
+    res.status(200).json("Comment has been deleted")
+  } catch (error) {
+    console.error("Error deleting comment:", error)
+    next(error)
+  }
+}
