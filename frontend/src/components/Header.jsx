@@ -71,7 +71,7 @@ export default function Header() {
         to="/home"
         className="self-center whitespace-nowrap text-sm sm:text-xl font-semibold dark:text-white"
       >
-        <span className="px-3 py-1 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 rounded-lg text-white">
+        <span className="bg-gradient-to-r from-pink-400 via-red-400 to-yellow-400 text-white py-1 px-3 rounded-lg">
           Chilalo Food Complex
         </span>
         Blog
@@ -93,7 +93,7 @@ export default function Header() {
       </form>
 
       {/* Mobile search button */}
-      <Button className="w-12 h-10 lg:hidden bg-yellow-500">
+      <Button className="w-12 h-10 lg:hidden">
         <AiOutlineSearch />
       </Button>
 
@@ -144,7 +144,12 @@ export default function Header() {
           // If no user is logged in
           // Link to the sign-in page
           <Link to="/sign-in">
-            <Button gradientDuoTone="purpleToBlue">Sign In</Button>
+            <Button
+              className="bg-gradient-to-r from-pink-400 via-red-400 to-yellow-400 text-white py-1 px-3 rounded-lg
+              hover:from-pink-500 hover:via-red-500 hover:to-yellow-500"
+            >
+              Sign In
+            </Button>
           </Link>
         )}
         <Navbar.Toggle onClick={() => setIsOpen(!isOpen)} />

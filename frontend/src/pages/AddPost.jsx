@@ -157,7 +157,8 @@ export default function AddPost() {
         />
         <Button
           type="submit"
-          className="bg-gradient-to-r from-red-400 to-yellow-400"
+          className="bg-gradient-to-r from-pink-400 via-red-400 to-yellow-400 text-white py-1 px-3 rounded-lg
+              hover:from-pink-500 hover:via-red-500 hover:to-yellow-500"
         >
           Post
         </Button>

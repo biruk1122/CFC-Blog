@@ -80,10 +80,7 @@ export default function SignIn() {
           {/* Render a link to the home page with specified styles */}
           <Link to="/" className="font-bold dark:text-white text-4xl">
             {/* Render a span with gradient background and text styles */}
-            <span
-              className="px-2 py-1 bg-gradient-to-r from-indigo-500 
-          via-purple-500 to-pink-500 rounded-lg text-white"
-            >
+            <span className="bg-gradient-to-r from-pink-400 via-red-400 to-yellow-400 text-white py-1 px-3 rounded">
               CFC Daily
             </span>
             Blogs
@@ -127,9 +124,10 @@ export default function SignIn() {
             {/* Render a button for form submission */}
             <Button
               type="submit"
+              gradientDuoTone="pinkToOrange"
               // Specify button styles with gradient background
-              className="bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 text-white py-2 px-4 rounded 
-              hover:from-indigo-600 hover:via-purple-600 hover:to-pink-600"
+              className="bg-gradient-to-r from-pink-400 via-red-400 to-yellow-400 text-white py-2 px-4 rounded
+              hover:from-pink-500 hover:via-red-500 hover:to-yellow-500"
               disabled={loading}
             >
               {loading ? (

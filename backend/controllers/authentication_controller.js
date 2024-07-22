@@ -121,7 +121,7 @@ export const google = async (req, res, next) => {
       // Destructure the password field out of the userInfo object and keep the rest
       const { password, ...rest } = userInfo._doc
       // Send a 200 status response, set an HTTP-only cookie with the JWT token, and return the user info without the password
-      console.log("google dign in data", rest)
+      // console.log("google sign in data", rest)
       res
         .status(200)
         .cookie("access_token", authToken, {

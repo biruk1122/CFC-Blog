@@ -23,7 +23,7 @@ export default function FooterSection() {
               to="/home"
               className="text-2xl font-bold text-gray-800 dark:text-white"
             >
-              <span className="px-3 py-2 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 rounded-lg text-white">
+              <span className="bg-gradient-to-r from-pink-400 via-red-400 to-yellow-400 text-white py-1 px-3 rounded">
                 CFC Daily
               </span>
               Blog
