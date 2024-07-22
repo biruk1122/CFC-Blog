@@ -11,6 +11,7 @@ import blogCommentRoutes from "./routes/blog_comment_route.js"
 import authenticationRoutes from "./routes/authentication_route.js"
 import cookieParser from "cookie-parser"
 import postRoutes from "./routes/blog_post_route.js"
+import path from "path"
 
 // Load environment variables from .env file
 dotenv.config()
@@ -24,6 +25,8 @@ mongoose
   .catch((error) => {
     console.log(error) // Log any connection errors
   })
+
+const __dirname = path.resolve()
 
 // Create an Express application
 const app = express()
@@ -43,6 +46,12 @@ app.use("/api/user", userRoutes)
 app.use("/api/authentication", authenticationRoutes)
 app.use("/api/post", postRoutes)
 app.use("/api/comment", blogCommentRoutes)
+
+app.use(express.static(path.join(__dirname, "/frontend/dist")))
+
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "frontend", "dist", "index.html"))
+})
 
 // Global error handling middleware
 app.use((err, req, res, next) => {
