@@ -4,34 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Chilalo Food Complex Blog</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      line-height: 1.6;
-      margin: 20px;
-    }
-    h1 {
-      color: #333;
-    }
-    h2 {
-      color: #555;
-      margin-top: 20px;
-    }
-    h3 {
-      color: #777;
-      margin-top: 15px;
-    }
-    ul {
-      list-style-type: disc;
-      padding-left: 20px;
-    }
-    img {
-      max-width: 100%;
-      height: auto;
-      display: block;
-      margin: 20px 0;
-    }
-  </style>
+ 
 </head>
 <body>
   <h1>Chilalo Food Complex Blog</h1>
