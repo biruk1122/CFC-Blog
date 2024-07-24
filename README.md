@@ -35,7 +35,6 @@
 </head>
 <body>
   <h1>Chilalo Food Complex Blog</h1>
- 
   <p>
     I am building a blog website for Chilalo Food Complex to engage employees and showcase the vibrant community within the company.
     This platform will serve as a space for sharing updates, recipes, stories, and events, fostering a sense of connection and collaboration among staff and company members.
@@ -69,10 +68,10 @@
     <li>Node.js with Express for server-side operations, MongoDB for database management.</li>
   </ul>
   <h3>Signin Page</h3>
-   <img src="frontend/img/Signin Page.PNG" alt="Signin Page">
-   <h3>User Dashboard</h3>
-    <img src="frontend/img/User Dashboard.PNG" alt="User Dashboard">
-    <h3>Admin Dashboard</h3>
-     <img src="frontend/img/Admin Dashboard.PNG" alt="Admin Dashboard">
+  <img src="frontend/img/Signin Page.PNG" alt="Signin Page">
+  <h3>User Dashboard</h3>
+  <img src="frontend/img/User Dashboard.PNG" alt="User Dashboard">
+  <h3>Admin Dashboard</h3>
+  <img src="frontend/img/Admin Dashboard.PNG" alt="Admin Dashboard">
 </body>
 </html>
